@@ -1,0 +1,422 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Muller&#8217;s Ratchet Pt. 1 - scIT</title>
+  <meta name="author" content="Jun Ling">
+
+  
+  <meta name="description" content="One of the more interesting courses I took in science undergrad was
+Ecological and Evolutionary Genetics. Sometimes scientific processes
+are perfect &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jling90.github.io/blog/2015/01/14/Mullers-ratchet">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Raleway:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">scIT</a></h1>
+  
+    <h2>Where science and IT come to party</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="jling90.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about_me/page.html">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Muller&#8217;s Ratchet Pt. 1</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-14T17:58:12+10:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:58 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>One of the more interesting courses I took in science undergrad was
+<em>Ecological and Evolutionary Genetics</em>. Sometimes scientific processes
+are perfect candidates for computational modelling and in our first
+practical, I was ecstatic when we received code to experiment with.</p>
+
+<h3>Muller&rsquo;s ratchet, watered down</h3>
+
+<p>The code we were given was an R script for simulating
+<a href="http://en.wikipedia.org/wiki/Muller%27s_ratchet">Muller&rsquo;s ratchet</a>, an
+explanation for the accumulation of deleterious mutations in asexual
+populations. One consequence of this mechanism is that as these
+deleterious mutations accrue in a population over time
+(a phenomenon termed
+&lsquo;genetic load&rsquo;), the ability for the population to survive in its
+environment is compromised. Ultimately this can lead to an increased
+risk of extinction.</p>
+
+<p>Genetic mutations occur stochastically through faulty DNA
+replication and repair or in response to environmental factors such
+as ionizing radiation or chemical mutagens. A deleterious mutation
+results in a phenotype (&lsquo;trait&rsquo;) which reduces an
+individual&rsquo;s &lsquo;fitness&rsquo; - the ability for an organism to survive to
+produce offspring.</p>
+
+<p>When asexual organisms reproduce, children are an identical
+genetic clone of their parent. As such, asexual offspring
+inherit all mutations from their parents
+(except in the rare case of backward mutation).</p>
+
+<p>In the absence of
+genetic recombination, mutations are preserved in</p>
+
+<p>these mutations can not be purged from the
+genome and so in subsequent generations the number of deleterious
+mutations in a family line necessarily increases.</p>
+
+<p>Eventually, as a result of genetic drift the least loaded classes will
+be lost. Each time this occurs represents a &lsquo;click&rsquo; of Muller&rsquo;s ratchet
+.</p>
+
+<p>The rate of Muller&rsquo;s ratchet is given by</p>
+
+<h3>To the code</h3>
+
+<p>The script we were given modelled loading of individuals within a
+population over evolutionary time.</p>
+
+<p>We were to investigate the effects of population size, <em>N</em>, mutation rate
+, &mu;, and selection coefficient, <em>s</em> on the speed of Muller&rsquo;s ratchet.</p>
+
+<p>Using the code we&rsquo;d been provided with, I wanted to run a large number of
+simulations to generate a nice profile of the variable-space.</p>
+
+<p>Unfortunately, the code as provided ran slowly making it painful
+to generate a large quantity of results for analysis. Throwing more
+processing power and memory at the code wasn&rsquo;t yielding much success so
+rather than take the sensible route and work with what we had, it was
+time to tinker with the code.</p>
+
+<p>Thanks to the speed-up, here are some sweet space-blankets I got
+around to making.</p>
+
+<h3>R&rsquo;s hate-affair with loops</h3>
+
+<p>Experienced R programmers frequently push an idea which might seem
+unusual to those coming from other languages: Loops are slow and should
+be avoided.</p>
+
+<p>This isn&rsquo;t strictly true of course, and loop structures exist in R as
+in most sensible tool for the task at hand. The idiom likely
+comes forth because simple loop logic can frequently be replaced with
+much more efficient vectorised operations.</p>
+
+<p>Other users will also note that for-loops can often be
+substituted with one of R&rsquo;s
+<a href="https://nsaunders.wordpress.com/2010/08/20/a-brief-introduction-to-apply-in-r/">apply</a>
+statements which can be more performant, and which some believe
+to be more readable.</p>
+
+<p>Regardless of which school of thought you belong to, a sensible first
+step in interrogating slow R code is to find loops and regard them with
+a bit of suspicion.</p>
+
+<p>Here&rsquo;s a simple loop vs vector example for illustrative purposes.</p>
+
+<figure class='code'><figcaption><span>vectorisation vs  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='R'><span class='line'><span class="c1"># Sample a vector of uniform, random numbers between 0 and 1.</span>
+</span><span class='line'>vec <span class="o">=</span> runif<span class="p">(</span><span class="m">10000000</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Function for rounding numbers to 0 or 1 -- loop implementation.</span>
+</span><span class='line'>round.loop <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="kp">seq_along</span><span class="p">(</span>vec<span class="p">)){</span>
+</span><span class='line'>        vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span>vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Function for rounding to 0 or 1 -- vector implementation.</span>
+</span><span class='line'>round.vec <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    vec<span class="p">[</span>vec <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+</span><span class='line'>    vec<span class="p">[</span>vec <span class="o">&gt;=</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># A bit of explanation. The expression &#39;vec[vec &lt; 0.5] &lt;- 0&#39;</span>
+</span><span class='line'>    <span class="c1"># selects elements from vec where &#39;vec &lt; 0.5&#39; evaluates TRUE then</span>
+</span><span class='line'>    <span class="c1"># replaces these elements with 0. Likewise for values &gt;=0.5.</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># For completeness... using &#39;lapply&#39;.</span>
+</span><span class='line'>round.apply <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    <span class="kp">lapply</span><span class="p">(</span>vec<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
+</span><span class='line'>        <span class="kr">if</span> <span class="p">(</span>x <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Time to test and profile...</span>
+</span><span class='line'>test.wrapper <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>func<span class="p">,</span> arg<span class="p">){</span>
+</span><span class='line'>    Rprof<span class="p">(</span><span class="s">&quot;test.out&quot;</span><span class="p">)</span>
+</span><span class='line'>    result <span class="o">&lt;-</span> func<span class="p">(</span>arg<span class="p">)</span>
+</span><span class='line'>    Rprof<span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
+</span><span class='line'>    summaryRprof<span class="p">(</span><span class="s">&quot;test.out&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>test.wrapper<span class="p">(</span>round.loop<span class="p">,</span> vec<span class="p">)</span>
+</span><span class='line'><span class="c1"># $sampling.time</span>
+</span><span class='line'><span class="c1"># [1] 26.54</span>
+</span><span class='line'>
+</span><span class='line'>test.wrapper<span class="p">(</span>round.vec<span class="p">,</span> vec<span class="p">)</span>
+</span><span class='line'><span class="c1"># $sampling.time</span>
+</span><span class='line'><span class="c1"># [1] 0.9</span>
+</span><span class='line'>
+</span><span class='line'>test.wrapper<span class="p">(</span>round.apply<span class="p">,</span> vec<span class="p">)</span>
+</span><span class='line'><span class="c1"># $sampling.time</span>
+</span><span class='line'><span class="c1"># [1] 47.42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As we should all know, premature optimization is a cardinal sin, but
+after performing some coarse profiling with Rprof, it turned out one
+little function in our Muller&rsquo;s Ratchet script was taking up
+approximately 98% of the script&rsquo;s execution time. In the next part of
+this post, we&rsquo;ll be diving into the code and wriggling around a bit.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jun Ling</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-14T17:58:12+10:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>5:58 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/genetics/'>genetics</a>, <a class='category' href='/blog/categories/optimisation/'>optimisation,</a>, <a class='category' href='/blog/categories/r/'>r,</a>, <a class='category' href='/blog/categories/vectorisation/'>vectorisation,</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://jling90.github.io/blog/2015/01/14/Mullers-ratchet/" data-via="" data-counturl="http://jling90.github.io/blog/2015/01/14/Mullers-ratchet/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/13/Floats/" title="Previous Post: Beware, floats">&laquo; Beware, floats</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/02/20/mullers-ratchet-2/" title="Next Post: Muller's ratchet pt.2">Muller&#8217;s ratchet pt.2 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/28/Shannon-entropy-and-passwords/">Shannon Entropy and Stronger Passwords</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/23/visualising-mullers-ratchet-2/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/17/visualising-mullers-ratchet/">Visualising Muller&#8217;s Ratchet pt.1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/20/mullers-ratchet-2/">Muller&#8217;s Ratchet pt.2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/14/Mullers-ratchet/">Muller&#8217;s Ratchet Pt. 1</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/jling90">@jling90</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jling90',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jun Ling -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

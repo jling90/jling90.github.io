@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Introductory | scIT]]></title>
+  <link href="http://jling90.github.io/blog/categories/introductory/atom.xml" rel="self"/>
+  <link href="http://jling90.github.io/"/>
+  <updated>2015-03-29T20:25:37+10:00</updated>
+  <id>http://jling90.github.io/</id>
+  <author>
+    <name><![CDATA[Jun Ling]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Beware, Floats]]></title>
+    <link href="http://jling90.github.io/blog/2015/01/13/Floats/"/>
+    <updated>2015-01-13T09:25:27+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/01/13/Floats</id>
+    <content type="html"><![CDATA[<h2>Bit-flipping machines</h2>
+
+<p>One task computers perform conspicuously better than humans is
+arithmetic. A common measure of a computer&rsquo;s performance is the number
+of floating point operations it can complete per second, (referred to
+as FLOPS).</p>
+
+<p>Of course, computers are just bit-flipping machines with no real
+concept of what numbers are or what they represent.
+Computers deal exclusively with bits which take the value
+0 or 1. Through binary representation, it&rsquo;s fairly easy for decimal
+integers, &integers; to be expressed solely using 1s and 0s.
+In one&rsquo;s-complement binary linky here, we can represent the decimal
+value -6 in four bits of memory as follows: 1110. Indeed, all integers
+between -2<sup><em>n</em></sup> - 1 and 2<sup><em>n</em> </sup> - 1 can be stored
+in <em>n</em> bits.
+However, in our day-to-day dealings with numbers we need support for
+more than just integers.</p>
+
+<p>PUT IN A NUMBER LINE HERE</p>
+
+<p>Recall that the real numbers, &reals; can be irrational and
+non-terminating values like &pi;. To faithfully represent
+such values would require an unfortunate, infinite amount of memory.
+So instead, computers approximate.</p>
+
+<h2>Enter floating point</h2>
+
+<p>Floating point is one system for representing real numbers.</p>
+
+<p>It should be unsurprising that most programming languages offer built-in
+datatypes for representing integers as well as (approximations for) reals.</p>
+
+<p>We mentioned before that we cannot store an infinite number of decimal
+places in memory. The amount of decimal places stored is referred to
+the precision of the float.</p>
+
+<p>Floating point is perhaps the most common way reals are represented
+by computers.
+Variables for storing integers are often designated with the type &lsquo;int&rsquo;
+or &lsquo;integer&rsquo; while those used for reals are often
+designated by the type &lsquo;float&rsquo;<sup>[1]</sup>.</p>
+
+<p><sup>[1]<em>Other float types such as &lsquo;double&rsquo; or &lsquo;long&rsquo; specify the precision of the float.</em></sup></p>
+
+<h2>Floating limitations</h2>
+
+<p>As discussed, floating point numbers are only approximations for real
+numbers, so</p>
+
+<p><figure class='code'><figcaption><span>Listing 1 - Floating point addition</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">+</span> <span class="mf">0.35</span>
+</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="mf">0.4</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span>
+</span><span class='line'><span class="k">print</span> <span class="n">b</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><figure class='code'><figcaption><span>Output</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mf">0.6</span>
+</span><span class='line'><span class="mf">0.6</span>
+</span><span class='line'><span class="n">false</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>In 2 something floating point, floating point numbers are multiples
+of powers of two. Hence certain values such as 0.1, and 0.6 can
+never be accurately represented. Operations which evaluate to such
+numbers</p>
+
+<p>While both operations appear to evaluate to the expected result, 0.6,</p>
+
+<p>If this topic interests you, please refer to this <a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html">comprehensive resource</a>.</p>
+
+<p>Unlike integers, floats do not strictly obey the <a href="http://en.wikipedia.org/wiki/Associative_property">associative property</a>.</p>
+
+<p>This can cause unexpected behaviour when performing arithmetic.</p>
+
+<p><figure class='code'><figcaption><span>Listing 2 - Floating point associativity</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">**</span> <span class="mi">4</span>
+</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span>
+</span><span class='line'><span class="k">print</span> <span class="n">b</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><figure class='code'><figcaption><span>Output</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mf">0.0256</span>
+</span><span class='line'><span class="mf">0.0256</span>
+</span><span class='line'><span class="n">false</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>One important, and practical consideration to take out of this is that it would pay to <em>always</em> be wary of code which performs value comparisons between floating point values. Use integers anywhere they will do the job and consider investigating whether your language offers Decimal types where precision is crucial.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,108 @@
+---
+layout: post
+title: "Beware, floats"
+date: 2015-01-13 09:25:27 +1000
+comments: true
+categories: computer science, introductory
+---
+
+## Bit-flipping machines
+
+One task computers perform conspicuously better than humans is 
+arithmetic. A common measure of a computer's performance is the number 
+of floating point operations it can complete per second, (referred to
+as FLOPS).
+
+Of course, computers are just bit-flipping machines with no real 
+concept of what numbers are or what they represent. 
+Computers deal exclusively with bits which take the value
+0 or 1. Through binary representation, it's fairly easy for decimal
+integers, &integers; to be expressed solely using 1s and 0s. 
+In one's-complement binary linky here, we can represent the decimal
+value -6 in four bits of memory as follows: 1110. Indeed, all integers
+between -2<sup>*n*</sup> - 1 and 2<sup>*n* </sup> - 1 can be stored
+in *n* bits. 
+However, in our day-to-day dealings with numbers we need support for 
+more than just integers.
+
+PUT IN A NUMBER LINE HERE
+
+Recall that the real numbers, &reals; can be irrational and
+non-terminating values like &pi;. To faithfully represent
+such values would require an unfortunate, infinite amount of memory.
+So instead, computers approximate.
+
+## Enter floating point
+
+Floating point is one system for representing real numbers.
+
+
+
+It should be unsurprising that most programming languages offer built-in 
+datatypes for representing integers as well as (approximations for) reals. 
+
+We mentioned before that we cannot store an infinite number of decimal
+places in memory. The amount of decimal places stored is referred to
+the precision of the float.
+
+Floating point is perhaps the most common way reals are represented
+by computers.
+Variables for storing integers are often designated with the type 'int'
+or 'integer' while those used for reals are often 
+designated by the type 'float'<sup>[1]</sup>.
+
+<sup>[1]*Other float types such as 'double' or 'long' specify the precision of the float.*</sup>
+
+## Floating limitations
+
+As discussed, floating point numbers are only approximations for real
+numbers, so 
+
+
+
+{% codeblock lang:python Listing 1 - Floating point addition%}
+a = 0.25 + 0.35
+b = 0.2 + 0.4
+print a
+print b
+print a == b
+{% endcodeblock %}
+
+{% codeblock lang:python Output%}
+0.6
+0.6
+false
+{% endcodeblock %}
+
+In 2 something floating point, floating point numbers are multiples
+of powers of two. Hence certain values such as 0.1, and 0.6 can
+never be accurately represented. Operations which evaluate to such
+numbers 
+
+While both operations appear to evaluate to the expected result, 0.6, 
+
+If this topic interests you, please refer to this [comprehensive resource](http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html).
+
+
+
+
+Unlike integers, floats do not strictly obey the [associative property](http://en.wikipedia.org/wiki/Associative_property). 
+
+This can cause unexpected behaviour when performing arithmetic.
+
+
+{% codeblock lang:python Listing 2 - Floating point associativity%}
+a = 0.4 ** 4
+b = 0.4 * 0.4 * 0.4 * 0.4
+print a
+print b
+print a == b
+{% endcodeblock %}
+
+{% codeblock lang:python Output%}
+0.0256
+0.0256
+false
+{% endcodeblock %}
+
+One important, and practical consideration to take out of this is that it would pay to *always* be wary of code which performs value comparisons between floating point values. Use integers anywhere they will do the job and consider investigating whether your language offers Decimal types where precision is crucial.

@@ -1,0 +1,64 @@
+<div class="highlight"><pre><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span>Sample a <span class="kt">vector</span> of uniform<span class="p">,</span> random numbers between <span class="m">0</span> and <span class="m">1.</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>vec <span class="o">=</span> runif<span class="p">(</span><span class="m">10000000</span><span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span>Function <span class="kr">for</span> rounding numbers to <span class="m">0</span> or <span class="m">1</span> <span class="o">&amp;</span>ndash<span class="p">;</span> loop implementation.<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>round.loop <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+    <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="kp">seq_along</span><span class="p">(</span>vec<span class="p">)){</span>
+        vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">if</span> <span class="p">(</span>vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&amp;</span>lt<span class="p">;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+    <span class="p">}</span>
+<span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span>Function <span class="kr">for</span> rounding to <span class="m">0</span> or <span class="m">1</span> <span class="o">&amp;</span>ndash<span class="p">;</span> <span class="kt">vector</span> implementation.<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>round.vec <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+    vec<span class="p">[</span>vec <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+    vec<span class="p">[</span>vec <span class="o">&gt;=</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="m">1</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>pre<span class="o">&gt;&lt;</span>code<span class="o">&gt;</span><span class="c1"># A bit of explanation. The expression &#39;vec[vec &amp;lt; 0.5] &amp;lt;- 0&#39;</span>
+<span class="c1"># selects elements from vec where &#39;vec &amp;lt; 0.5&#39; evaluates TRUE then</span>
+<span class="c1"># replaces these elements with 0. Likewise for values &amp;gt;=0.5.</span>
+<span class="o">&lt;/</span>code<span class="o">&gt;&lt;/</span>pre<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span>For completeness<span class="o">&amp;</span>hellip<span class="p">;</span> using <span class="o">&amp;</span>lsquo<span class="p">;</span><span class="kp">lapply</span><span class="o">&amp;</span>rsquo<span class="p">;</span><span class="m">.</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>round.apply <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+    <span class="kp">lapply</span><span class="p">(</span>vec<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
+        <span class="kr">if</span> <span class="p">(</span>x <span class="o">&amp;</span>lt<span class="p">;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+    <span class="p">})</span>
+<span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span>Time to test and profile<span class="o">&amp;</span>hellip<span class="p">;</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">function</span><span class="p">(</span>func<span class="p">,</span> arg<span class="p">){</span>
+    Rprof<span class="p">(</span><span class="o">&amp;</span>ldquo<span class="p">;</span>test.out<span class="o">&amp;</span>rdquo<span class="p">;)</span>
+    result <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> func<span class="p">(</span>arg<span class="p">)</span>
+    Rprof<span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
+    summaryRprof<span class="p">(</span><span class="o">&amp;</span>ldquo<span class="p">;</span>test.out<span class="o">&amp;</span>rdquo<span class="p">;)</span>
+<span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper<span class="p">(</span>round.loop<span class="p">,</span> vec<span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;$</span>sampling.time<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">26.54</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper<span class="p">(</span>round.vec<span class="p">,</span> vec<span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;$</span>sampling.time<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper<span class="p">(</span>round.apply<span class="p">,</span> vec<span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;$</span>sampling.time<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>h1<span class="o">&gt;</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">47.42</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+
+<span class="o">&lt;</span>p<span class="o">&gt;</span>
+</pre></div>

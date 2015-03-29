@@ -1,0 +1,43 @@
+---
+layout: post
+title: "Visualising Muller's Ratchet pt.1"
+date: 2015-03-17 16:09:46 +1000
+comments: true
+categories: data visualisation, d3
+---
+
+<p style="text-align:justify text-justify:inter-word">
+Data visualisations are a fantastic medium for communicating knowledge.
+They are often intuitive and information-dense.
+Recently I've been experimenting with the data visualisation library
+d3.js. There are a wealth of fantastic example's on d3's website.
+</p>
+
+
+<p style="text-align:justify text-justify:inter-word">
+As a thematic continuation from the previous posts, I've attempted a
+number of illustrations in d3 related to Muller's ratchet.
+</p>
+<br/>
+
+<div id="svgarea"></div>
+
+<script src="javascripts/libs/d3/d3.min.js"></script>
+<script src="javascripts/muller_grid.js"></script>
+
+<br/>
+<p style="text-align:justify text-justify:inter-word">
+Initially, the grid above represents a population of
+mutation-free individuals. Mutations are applied to the population
+over time, sampling from a Poisson distribution. As the number of
+mutations increases, squares become progressively more red.
+
+</p>
+
+<p style="text-align:justify text-justify:inter-word">
+We can intuit that as population size increases, it will take longer
+for the population to become 'fully' mutated, and conversely for
+increasing mutation rate.
+Try playing with the parameters to see if this reflects expectation.
+</p>
+

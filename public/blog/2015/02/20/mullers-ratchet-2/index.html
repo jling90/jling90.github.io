@@ -1,0 +1,304 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Muller&#8217;s Ratchet pt.2 - scIT</title>
+  <meta name="author" content="Jun Ling">
+
+  
+  <meta name="description" content="If you missed the first part of this post, read it here: From our code profiling we identified a function that was some title
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jling90.github.io/blog/2015/02/20/mullers-ratchet-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Raleway:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">scIT</a></h1>
+  
+    <h2>Where science and IT come to party</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="jling90.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about_me/page.html">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Muller&#8217;s Ratchet pt.2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-20T00:30:03+10:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:30 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>If you missed the first part of this post, read it here:</p>
+
+<p>From our code profiling we identified a function that was</p>
+
+<figure class='code'><figcaption><span>some title</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='R'><span class='line'>get.parents<span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span>w<span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  N<span class="o">&lt;-</span><span class="kp">length</span><span class="p">(</span>w<span class="p">)</span>  <span class="c1"># population size, inferred from the vector of fitness values </span>
+</span><span class='line'>  wmax<span class="o">&lt;-</span><span class="kp">max</span><span class="p">(</span>w<span class="p">)</span>  <span class="c1"># maximum fitness in the population</span>
+</span><span class='line'>  w<span class="o">&lt;-</span>w<span class="o">/</span>wmax     <span class="c1"># normalization</span>
+</span><span class='line'>  
+</span><span class='line'>  Nnew<span class="o">&lt;-</span><span class="m">0</span>       <span class="c1"># the size of the offspring population</span>
+</span><span class='line'>  parents<span class="o">&lt;-</span><span class="kp">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span>N<span class="p">)</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kr">while</span><span class="p">(</span>Nnew<span class="o">&lt;</span>N<span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      n<span class="o">&lt;-</span><span class="kp">sample</span><span class="p">(</span>N<span class="p">,</span><span class="m">1</span><span class="p">)</span>        <span class="c1"># randomly choose parental individual</span>
+</span><span class='line'>      <span class="kr">if</span><span class="p">(</span>w<span class="p">[</span>n<span class="p">]</span><span class="o">&gt;</span>runif<span class="p">(</span><span class="m">1</span><span class="p">))</span>     <span class="c1"># if fitness of that individual is greater than a random number</span>
+</span><span class='line'>      <span class="p">{</span>                      <span class="c1"># make that individual an actual parent</span>
+</span><span class='line'>          Nnew<span class="o">&lt;-</span>Nnew<span class="m">+1</span>
+</span><span class='line'>          parents<span class="p">[</span>Nnew<span class="p">]</span><span class="o">&lt;-</span>n
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  parents
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In plain English, this function determines individuals in
+the next generation from our current population.</p>
+
+<p>populating our new generation from the current generation</p>
+
+<p>Here&rsquo;s how it works. We take our old &lsquo;population&rsquo; - an array of floats
+between 0 and 1, representing the &lsquo;fitness&rsquo; of individuals - then
+select (with replacement) an individual. We generate a random number
+and if the individual&rsquo;s fitness</p>
+
+<p>Essentially we&rsquo;re performing a type of boot-strapping. We&rsquo;re sampling
+a parent</p>
+
+<p>Following on from the first post, we can see that a lot is going on
+within a while loop. As an initial strategy, I wanted to see whether I
+could either replace the loop or reduce the amount of work that was
+being performed inside it.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jun Ling</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-02-20T00:30:03+10:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:30 am</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://jling90.github.io/blog/2015/02/20/mullers-ratchet-2/" data-via="" data-counturl="http://jling90.github.io/blog/2015/02/20/mullers-ratchet-2/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/14/Mullers-ratchet/" title="Previous Post: Muller's Ratchet pt. 1">&laquo; Muller&#8217;s Ratchet pt. 1</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/03/17/visualising-mullers-ratchet/" title="Next Post: Visualising Muller's Ratchet pt.1">Visualising Muller&#8217;s Ratchet pt.1 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/28/Shannon-entropy-and-passwords/">Shannon Entropy and Stronger Passwords</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/23/visualising-mullers-ratchet-2/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/17/visualising-mullers-ratchet/">Visualising Muller&#8217;s Ratchet pt.1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/20/mullers-ratchet-2/">Muller&#8217;s Ratchet pt.2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/14/Mullers-ratchet/">Muller&#8217;s Ratchet Pt. 1</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/jling90">@jling90</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jling90',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jun Ling -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

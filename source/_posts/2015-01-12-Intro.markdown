@@ -1,0 +1,33 @@
+---
+layout: post
+title: "Welcome!"
+date: 2015-01-12 14:35:52 +1000
+comments: true
+categories: 
+---
+
+Hi and welcome to my blog. My name is Jun.
+
+By day, I'm a student at the University of Queensland studying a 
+Bachelor of Software Engineering and Bachelor of Science in Genetics
+(masked villain by night). I have a keen interest in programming, science 
+and especially where the two intersect.
+
+I spend a lot of my time in a linux terminal hacking together little
+scripts to automate manual tasks in the blind hope that I'll be saving
+effort in the long run.
+At leisure I'm also an avid reader. I'll consume anything I can get my
+hands on; science papers, tech blogs or fiction novels. I think
+there's as much to learn from Kurt Vonnegut as Russel &amp; Norvig.
+
+I hope you'll take the time to poke through some of my stuff and 
+ask uncomfortable questions about things I've gotten wrong or worded
+poorly. That seems to me the best way to learn.
+
+-Jun
+
+<!---
+First time here? Reverse chronological ordering..
+
+
+-->

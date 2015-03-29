@@ -1,0 +1,21 @@
+<div class="highlight"><pre>get.parents<span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span>w<span class="p">)</span>
+<span class="p">{</span>
+	N<span class="o">&lt;-</span><span class="kp">length</span><span class="p">(</span>w<span class="p">)</span>  <span class="c1"># population size, inferred from the vector of fitness values </span>
+	wmax<span class="o">&lt;-</span><span class="kp">max</span><span class="p">(</span>w<span class="p">)</span>  <span class="c1"># maximum fitness in the population</span>
+	w<span class="o">&lt;-</span>w<span class="o">/</span>wmax     <span class="c1"># normalization</span>
+	
+	Nnew<span class="o">&lt;-</span><span class="m">0</span>       <span class="c1"># the size of the offspring population</span>
+	parents<span class="o">&lt;-</span><span class="kp">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span>N<span class="p">)</span>
+	
+	<span class="kr">while</span><span class="p">(</span>Nnew<span class="o">&lt;</span>N<span class="p">)</span>
+	<span class="p">{</span>
+		n<span class="o">&lt;-</span><span class="kp">sample</span><span class="p">(</span>N<span class="p">,</span><span class="m">1</span><span class="p">)</span>        <span class="c1"># randomly choose parental individual</span>
+		<span class="kr">if</span><span class="p">(</span>w<span class="p">[</span>n<span class="p">]</span><span class="o">&gt;</span>runif<span class="p">(</span><span class="m">1</span><span class="p">))</span>     <span class="c1"># if fitness of that individual is greater than a random number</span>
+		<span class="p">{</span>					  <span class="c1"># make that individual an actual parent</span>
+			Nnew<span class="o">&lt;-</span>Nnew<span class="m">+1</span>
+			parents<span class="p">[</span>Nnew<span class="p">]</span><span class="o">&lt;-</span>n
+		<span class="p">}</span>
+	<span class="p">}</span>
+	parents
+<span class="p">}</span>
+</pre></div>

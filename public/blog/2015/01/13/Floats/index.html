@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Beware, Floats - scIT</title>
+  <meta name="author" content="Jun Ling">
+
+  
+  <meta name="description" content="Bit-flipping machines One task computers perform conspicuously better than humans is
+arithmetic. A common measure of a computer&rsquo;s performance &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jling90.github.io/blog/2015/01/13/Floats">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=Raleway:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">scIT</a></h1>
+  
+    <h2>Where science and IT come to party</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="jling90.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about_me/page.html">About Me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Beware, Floats</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-01-13T09:25:27+10:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:25 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Bit-flipping machines</h2>
+
+<p>One task computers perform conspicuously better than humans is
+arithmetic. A common measure of a computer&rsquo;s performance is the number
+of floating point operations it can complete per second, (referred to
+as FLOPS).</p>
+
+<p>Of course, computers are just bit-flipping machines with no real
+concept of what numbers are or what they represent.
+Computers deal exclusively with bits which take the value
+0 or 1. Through binary representation, it&rsquo;s fairly easy for decimal
+integers, &integers; to be expressed solely using 1s and 0s.
+In one&rsquo;s-complement binary linky here, we can represent the decimal
+value -6 in four bits of memory as follows: 1110. Indeed, all integers
+between -2<sup><em>n</em></sup> - 1 and 2<sup><em>n</em> </sup> - 1 can be stored
+in <em>n</em> bits.
+However, in our day-to-day dealings with numbers we need support for
+more than just integers.</p>
+
+<p>PUT IN A NUMBER LINE HERE</p>
+
+<p>Recall that the real numbers, &reals; can be irrational and
+non-terminating values like &pi;. To faithfully represent
+such values would require an unfortunate, infinite amount of memory.
+So instead, computers approximate.</p>
+
+<h2>Enter floating point</h2>
+
+<p>Floating point is one system for representing real numbers.</p>
+
+<p>It should be unsurprising that most programming languages offer built-in
+datatypes for representing integers as well as (approximations for) reals.</p>
+
+<p>We mentioned before that we cannot store an infinite number of decimal
+places in memory. The amount of decimal places stored is referred to
+the precision of the float.</p>
+
+<p>Floating point is perhaps the most common way reals are represented
+by computers.
+Variables for storing integers are often designated with the type &lsquo;int&rsquo;
+or &lsquo;integer&rsquo; while those used for reals are often
+designated by the type &lsquo;float&rsquo;<sup>[1]</sup>.</p>
+
+<p><sup>[1]<em>Other float types such as &lsquo;double&rsquo; or &lsquo;long&rsquo; specify the precision of the float.</em></sup></p>
+
+<h2>Floating limitations</h2>
+
+<p>As discussed, floating point numbers are only approximations for real
+numbers, so</p>
+
+<figure class='code'><figcaption><span>Listing 1 - Floating point addition</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">+</span> <span class="mf">0.35</span>
+</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="mf">0.4</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span>
+</span><span class='line'><span class="k">print</span> <span class="n">b</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Output</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mf">0.6</span>
+</span><span class='line'><span class="mf">0.6</span>
+</span><span class='line'><span class="n">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In 2 something floating point, floating point numbers are multiples
+of powers of two. Hence certain values such as 0.1, and 0.6 can
+never be accurately represented. Operations which evaluate to such
+numbers</p>
+
+<p>While both operations appear to evaluate to the expected result, 0.6,</p>
+
+<p>If this topic interests you, please refer to this <a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html">comprehensive resource</a>.</p>
+
+<p>Unlike integers, floats do not strictly obey the <a href="http://en.wikipedia.org/wiki/Associative_property">associative property</a>.</p>
+
+<p>This can cause unexpected behaviour when performing arithmetic.</p>
+
+<figure class='code'><figcaption><span>Listing 2 - Floating point associativity</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">**</span> <span class="mi">4</span>
+</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span>
+</span><span class='line'><span class="k">print</span> <span class="n">b</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Output</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mf">0.0256</span>
+</span><span class='line'><span class="mf">0.0256</span>
+</span><span class='line'><span class="n">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One important, and practical consideration to take out of this is that it would pay to <em>always</em> be wary of code which performs value comparisons between floating point values. Use integers anywhere they will do the job and consider investigating whether your language offers Decimal types where precision is crucial.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Jun Ling</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-01-13T09:25:27+10:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:25 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/computer/'>computer</a>, <a class='category' href='/blog/categories/introductory/'>introductory</a>, <a class='category' href='/blog/categories/science/'>science,</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://jling90.github.io/blog/2015/01/13/Floats/" data-via="" data-counturl="http://jling90.github.io/blog/2015/01/13/Floats/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/12/Intro/" title="Previous Post: Welcome!">&laquo; Welcome!</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/01/14/Mullers-ratchet/" title="Next Post: Muller's Ratchet pt. 1">Muller&#8217;s Ratchet pt. 1 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/28/Shannon-entropy-and-passwords/">Shannon Entropy and Stronger Passwords</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/23/visualising-mullers-ratchet-2/">Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/17/visualising-mullers-ratchet/">Visualising Muller&#8217;s Ratchet pt.1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/20/mullers-ratchet-2/">Muller&#8217;s Ratchet pt.2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/14/Mullers-ratchet/">Muller&#8217;s Ratchet Pt. 1</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/jling90">@jling90</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'jling90',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Jun Ling -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Visualisation, | scIT]]></title>
+  <link href="http://jling90.github.io/blog/categories/visualisation/atom.xml" rel="self"/>
+  <link href="http://jling90.github.io/"/>
+  <updated>2015-03-29T20:25:37+10:00</updated>
+  <id>http://jling90.github.io/</id>
+  <author>
+    <name><![CDATA[Jun Ling]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Visualising Muller's Ratchet pt.1]]></title>
+    <link href="http://jling90.github.io/blog/2015/03/17/visualising-mullers-ratchet/"/>
+    <updated>2015-03-17T16:09:46+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/03/17/visualising-mullers-ratchet</id>
+    <content type="html"><![CDATA[<p style="text-align:justify text-justify:inter-word">
+Data visualisations are a fantastic medium for communicating knowledge.
+They are often intuitive and information-dense.
+Recently I&#8217;ve been experimenting with the data visualisation library
+d3.js. There are a wealth of fantastic example&#8217;s on d3&#8217;s website.
+</p>
+
+
+
+
+<p style="text-align:justify text-justify:inter-word">
+As a thematic continuation from the previous posts, I&#8217;ve attempted a
+number of illustrations in d3 related to Muller&#8217;s ratchet.
+</p>
+
+
+<p><br/></p>
+
+<div id="svgarea"></div>
+
+
+
+
+<script src="javascripts/libs/d3/d3.min.js"></script>
+
+
+<script src="javascripts/muller_grid.js"></script>
+
+
+<p><br/></p>
+
+<p style="text-align:justify text-justify:inter-word">
+Initially, the grid above represents a population of
+mutation-free individuals. Mutations are applied to the population
+over time, sampling from a Poisson distribution. As the number of
+mutations increases, squares become progressively more red.
+
+</p>
+
+
+
+
+<p style="text-align:justify text-justify:inter-word">
+We can intuit that as population size increases, it will take longer
+for the population to become &#8216;fully&#8217; mutated, and conversely for
+increasing mutation rate.
+Try playing with the parameters to see if this reflects expectation.
+</p>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

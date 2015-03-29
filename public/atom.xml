@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[scIT]]></title>
+  <link href="http://jling90.github.io/atom.xml" rel="self"/>
+  <link href="http://jling90.github.io/"/>
+  <updated>2015-03-29T20:25:37+10:00</updated>
+  <id>http://jling90.github.io/</id>
+  <author>
+    <name><![CDATA[Jun Ling]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shannon Entropy and Stronger Passwords]]></title>
+    <link href="http://jling90.github.io/blog/2015/03/28/Shannon-entropy-and-passwords/"/>
+    <updated>2015-03-28T18:26:12+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/03/28/Shannon-entropy-and-passwords</id>
+    <content type="html"><![CDATA[<p>Password logins are something we should all be familiar with from day-to-day life.
+One topic that frequently comes up is: &ldquo;how do we select our passwords?&rdquo; One obvious
+but important point to make is that a <em>strong password is one which a computer will
+have difficulty guessing, not a human</em>. What follows is a (hopefully) intuitive
+introduction to password security to those without an information security background.</p>
+
+<p>Many services require that passwords contain some combination of lower case and upper case
+letters, numbers and symbols. A minimum password length is also often enforced.</p>
+
+<p>Shannon entropy (not to be confused with thermodynamic entropy, a similarly harrowing
+concept),</p>
+
+<p>The obvious challenge is that passwords often end up being meaningless strings of
+characters which are difficult to remember.</p>
+
+<p>Using &lsquo;pass phrases&rsquo; in the place of passwords allow the generation of memorable
+passwords which are higher in entropy than short strings of characters.</p>
+
+<p>One idea I find particularly clever idea which extends the principle of pass phrases is
+called Diceware.</p>
+
+<p><a href="https://firstlook.org/theintercept/2015/03/26/passphrases-can-memorize-attackers-cant-guess/">https://firstlook.org/theintercept/2015/03/26/passphrases-can-memorize-attackers-cant-guess/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Test]]></title>
+    <link href="http://jling90.github.io/blog/2015/03/23/visualising-mullers-ratchet-2/"/>
+    <updated>2015-03-23T15:05:59+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/03/23/visualising-mullers-ratchet-2</id>
+    <content type="html"><![CDATA[<body>
+
+A variation (improvement?) on the previous visualisation. Again, 
+we&#8217;re simply starting with a mutation-free population then 
+applying mutations over time.
+
+<style>
+.bar {
+      fill: steelblue;
+}
+
+.axis {
+      font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+      fill: none;
+        stroke: #000;
+          shape-rendering: crispEdges;
+}
+/*
+.x.axis path {
+      display: none;
+}
+*/
+.axis text {
+      font: 10px sans-serif;
+}
+
+
+</style>
+
+<div id="svgarea3"><div>
+<script src="javascripts/libs/d3/d3.min.js"></script>
+<script src="javascripts/mratch.js"></script>
+</body>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Visualising Muller's Ratchet pt.1]]></title>
+    <link href="http://jling90.github.io/blog/2015/03/17/visualising-mullers-ratchet/"/>
+    <updated>2015-03-17T16:09:46+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/03/17/visualising-mullers-ratchet</id>
+    <content type="html"><![CDATA[<p style="text-align:justify text-justify:inter-word">
+Data visualisations are a fantastic medium for communicating knowledge.
+They are often intuitive and information-dense.
+Recently I&#8217;ve been experimenting with the data visualisation library
+d3.js. There are a wealth of fantastic example&#8217;s on d3&#8217;s website.
+</p>
+
+
+<p style="text-align:justify text-justify:inter-word">
+As a thematic continuation from the previous posts, I&#8217;ve attempted a
+number of illustrations in d3 related to Muller&#8217;s ratchet.
+</p>
+<br/>
+
+<div id="svgarea"></div>
+
+<script src="javascripts/libs/d3/d3.min.js"></script>
+<script src="javascripts/muller_grid.js"></script>
+
+<br/>
+<p style="text-align:justify text-justify:inter-word">
+Initially, the grid above represents a population of
+mutation-free individuals. Mutations are applied to the population
+over time, sampling from a Poisson distribution. As the number of
+mutations increases, squares become progressively more red.
+
+</p>
+
+<p style="text-align:justify text-justify:inter-word">
+We can intuit that as population size increases, it will take longer
+for the population to become &#8216;fully&#8217; mutated, and conversely for
+increasing mutation rate.
+Try playing with the parameters to see if this reflects expectation.
+</p>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Muller's Ratchet pt.2]]></title>
+    <link href="http://jling90.github.io/blog/2015/02/20/mullers-ratchet-2/"/>
+    <updated>2015-02-20T00:30:03+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/02/20/mullers-ratchet-2</id>
+    <content type="html"><![CDATA[<p>If you missed the first part of this post, read it here:</p>
+
+<p>From our code profiling we identified a function that was</p>
+
+<figure class='code'><figcaption><span>some title</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='R'><span class='line'>get.parents<span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span>w<span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  N<span class="o">&lt;-</span><span class="kp">length</span><span class="p">(</span>w<span class="p">)</span>  <span class="c1"># population size, inferred from the vector of fitness values </span>
+</span><span class='line'>  wmax<span class="o">&lt;-</span><span class="kp">max</span><span class="p">(</span>w<span class="p">)</span>  <span class="c1"># maximum fitness in the population</span>
+</span><span class='line'>  w<span class="o">&lt;-</span>w<span class="o">/</span>wmax     <span class="c1"># normalization</span>
+</span><span class='line'>  
+</span><span class='line'>  Nnew<span class="o">&lt;-</span><span class="m">0</span>       <span class="c1"># the size of the offspring population</span>
+</span><span class='line'>  parents<span class="o">&lt;-</span><span class="kp">rep</span><span class="p">(</span><span class="m">0</span><span class="p">,</span>N<span class="p">)</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="kr">while</span><span class="p">(</span>Nnew<span class="o">&lt;</span>N<span class="p">)</span>
+</span><span class='line'>  <span class="p">{</span>
+</span><span class='line'>      n<span class="o">&lt;-</span><span class="kp">sample</span><span class="p">(</span>N<span class="p">,</span><span class="m">1</span><span class="p">)</span>        <span class="c1"># randomly choose parental individual</span>
+</span><span class='line'>      <span class="kr">if</span><span class="p">(</span>w<span class="p">[</span>n<span class="p">]</span><span class="o">&gt;</span>runif<span class="p">(</span><span class="m">1</span><span class="p">))</span>     <span class="c1"># if fitness of that individual is greater than a random number</span>
+</span><span class='line'>      <span class="p">{</span>                      <span class="c1"># make that individual an actual parent</span>
+</span><span class='line'>          Nnew<span class="o">&lt;-</span>Nnew<span class="m">+1</span>
+</span><span class='line'>          parents<span class="p">[</span>Nnew<span class="p">]</span><span class="o">&lt;-</span>n
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  parents
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In plain English, this function determines individuals in
+the next generation from our current population.</p>
+
+<p>populating our new generation from the current generation</p>
+
+<p>Here&rsquo;s how it works. We take our old &lsquo;population&rsquo; - an array of floats
+between 0 and 1, representing the &lsquo;fitness&rsquo; of individuals - then
+select (with replacement) an individual. We generate a random number
+and if the individual&rsquo;s fitness</p>
+
+<p>Essentially we&rsquo;re performing a type of boot-strapping. We&rsquo;re sampling
+a parent</p>
+
+<p>Following on from the first post, we can see that a lot is going on
+within a while loop. As an initial strategy, I wanted to see whether I
+could either replace the loop or reduce the amount of work that was
+being performed inside it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Muller's Ratchet Pt. 1]]></title>
+    <link href="http://jling90.github.io/blog/2015/01/14/Mullers-ratchet/"/>
+    <updated>2015-01-14T17:58:12+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/01/14/Mullers-ratchet</id>
+    <content type="html"><![CDATA[<p>One of the more interesting courses I took in science undergrad was
+<em>Ecological and Evolutionary Genetics</em>. Sometimes scientific processes
+are perfect candidates for computational modelling and in our first
+practical, I was ecstatic when we received code to experiment with.</p>
+
+<h3>Muller&rsquo;s ratchet, watered down</h3>
+
+<p>The code we were given was an R script for simulating
+<a href="http://en.wikipedia.org/wiki/Muller%27s_ratchet">Muller&rsquo;s ratchet</a>, an
+explanation for the accumulation of deleterious mutations in asexual
+populations. One consequence of this mechanism is that as these
+deleterious mutations accrue in a population over time
+(a phenomenon termed
+&lsquo;genetic load&rsquo;), the ability for the population to survive in its
+environment is compromised. Ultimately this can lead to an increased
+risk of extinction.</p>
+
+<p>Genetic mutations occur stochastically through faulty DNA
+replication and repair or in response to environmental factors such
+as ionizing radiation or chemical mutagens. A deleterious mutation
+results in a phenotype (&lsquo;trait&rsquo;) which reduces an
+individual&rsquo;s &lsquo;fitness&rsquo; - the ability for an organism to survive to
+produce offspring.</p>
+
+<p>When asexual organisms reproduce, children are an identical
+genetic clone of their parent. As such, asexual offspring
+inherit all mutations from their parents
+(except in the rare case of backward mutation).</p>
+
+<p>In the absence of
+genetic recombination, mutations are preserved in</p>
+
+<p>these mutations can not be purged from the
+genome and so in subsequent generations the number of deleterious
+mutations in a family line necessarily increases.</p>
+
+<p>Eventually, as a result of genetic drift the least loaded classes will
+be lost. Each time this occurs represents a &lsquo;click&rsquo; of Muller&rsquo;s ratchet
+.</p>
+
+<p>The rate of Muller&rsquo;s ratchet is given by</p>
+
+<h3>To the code</h3>
+
+<p>The script we were given modelled loading of individuals within a
+population over evolutionary time.</p>
+
+<p>We were to investigate the effects of population size, <em>N</em>, mutation rate
+, &mu;, and selection coefficient, <em>s</em> on the speed of Muller&rsquo;s ratchet.</p>
+
+<p>Using the code we&rsquo;d been provided with, I wanted to run a large number of
+simulations to generate a nice profile of the variable-space.</p>
+
+<p>Unfortunately, the code as provided ran slowly making it painful
+to generate a large quantity of results for analysis. Throwing more
+processing power and memory at the code wasn&rsquo;t yielding much success so
+rather than take the sensible route and work with what we had, it was
+time to tinker with the code.</p>
+
+<p>Thanks to the speed-up, here are some sweet space-blankets I got
+around to making.</p>
+
+<h3>R&rsquo;s hate-affair with loops</h3>
+
+<p>Experienced R programmers frequently push an idea which might seem
+unusual to those coming from other languages: Loops are slow and should
+be avoided.</p>
+
+<p>This isn&rsquo;t strictly true of course, and loop structures exist in R as
+in most sensible tool for the task at hand. The idiom likely
+comes forth because simple loop logic can frequently be replaced with
+much more efficient vectorised operations.</p>
+
+<p>Other users will also note that for-loops can often be
+substituted with one of R&rsquo;s
+<a href="https://nsaunders.wordpress.com/2010/08/20/a-brief-introduction-to-apply-in-r/">apply</a>
+statements which can be more performant, and which some believe
+to be more readable.</p>
+
+<p>Regardless of which school of thought you belong to, a sensible first
+step in interrogating slow R code is to find loops and regard them with
+a bit of suspicion.</p>
+
+<p>Here&rsquo;s a simple loop vs vector example for illustrative purposes.</p>
+
+<figure class='code'><figcaption><span>vectorisation vs  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='R'><span class='line'><span class="c1"># Sample a vector of uniform, random numbers between 0 and 1.</span>
+</span><span class='line'>vec <span class="o">=</span> runif<span class="p">(</span><span class="m">10000000</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Function for rounding numbers to 0 or 1 -- loop implementation.</span>
+</span><span class='line'>round.loop <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="kp">seq_along</span><span class="p">(</span>vec<span class="p">)){</span>
+</span><span class='line'>        vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span>vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Function for rounding to 0 or 1 -- vector implementation.</span>
+</span><span class='line'>round.vec <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    vec<span class="p">[</span>vec <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+</span><span class='line'>    vec<span class="p">[</span>vec <span class="o">&gt;=</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1"># A bit of explanation. The expression &#39;vec[vec &lt; 0.5] &lt;- 0&#39;</span>
+</span><span class='line'>    <span class="c1"># selects elements from vec where &#39;vec &lt; 0.5&#39; evaluates TRUE then</span>
+</span><span class='line'>    <span class="c1"># replaces these elements with 0. Likewise for values &gt;=0.5.</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># For completeness... using &#39;lapply&#39;.</span>
+</span><span class='line'>round.apply <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    <span class="kp">lapply</span><span class="p">(</span>vec<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
+</span><span class='line'>        <span class="kr">if</span> <span class="p">(</span>x <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Time to test and profile...</span>
+</span><span class='line'>test.wrapper <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>func<span class="p">,</span> arg<span class="p">){</span>
+</span><span class='line'>    Rprof<span class="p">(</span><span class="s">&quot;test.out&quot;</span><span class="p">)</span>
+</span><span class='line'>    result <span class="o">&lt;-</span> func<span class="p">(</span>arg<span class="p">)</span>
+</span><span class='line'>    Rprof<span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
+</span><span class='line'>    summaryRprof<span class="p">(</span><span class="s">&quot;test.out&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>test.wrapper<span class="p">(</span>round.loop<span class="p">,</span> vec<span class="p">)</span>
+</span><span class='line'><span class="c1"># $sampling.time</span>
+</span><span class='line'><span class="c1"># [1] 26.54</span>
+</span><span class='line'>
+</span><span class='line'>test.wrapper<span class="p">(</span>round.vec<span class="p">,</span> vec<span class="p">)</span>
+</span><span class='line'><span class="c1"># $sampling.time</span>
+</span><span class='line'><span class="c1"># [1] 0.9</span>
+</span><span class='line'>
+</span><span class='line'>test.wrapper<span class="p">(</span>round.apply<span class="p">,</span> vec<span class="p">)</span>
+</span><span class='line'><span class="c1"># $sampling.time</span>
+</span><span class='line'><span class="c1"># [1] 47.42</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As we should all know, premature optimization is a cardinal sin, but
+after performing some coarse profiling with Rprof, it turned out one
+little function in our Muller&rsquo;s Ratchet script was taking up
+approximately 98% of the script&rsquo;s execution time. In the next part of
+this post, we&rsquo;ll be diving into the code and wriggling around a bit.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Beware, Floats]]></title>
+    <link href="http://jling90.github.io/blog/2015/01/13/Floats/"/>
+    <updated>2015-01-13T09:25:27+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/01/13/Floats</id>
+    <content type="html"><![CDATA[<h2>Bit-flipping machines</h2>
+
+<p>One task computers perform conspicuously better than humans is
+arithmetic. A common measure of a computer&rsquo;s performance is the number
+of floating point operations it can complete per second, (referred to
+as FLOPS).</p>
+
+<p>Of course, computers are just bit-flipping machines with no real
+concept of what numbers are or what they represent.
+Computers deal exclusively with bits which take the value
+0 or 1. Through binary representation, it&rsquo;s fairly easy for decimal
+integers, &integers; to be expressed solely using 1s and 0s.
+In one&rsquo;s-complement binary linky here, we can represent the decimal
+value -6 in four bits of memory as follows: 1110. Indeed, all integers
+between -2<sup><em>n</em></sup> - 1 and 2<sup><em>n</em> </sup> - 1 can be stored
+in <em>n</em> bits.
+However, in our day-to-day dealings with numbers we need support for
+more than just integers.</p>
+
+<p>PUT IN A NUMBER LINE HERE</p>
+
+<p>Recall that the real numbers, &reals; can be irrational and
+non-terminating values like &pi;. To faithfully represent
+such values would require an unfortunate, infinite amount of memory.
+So instead, computers approximate.</p>
+
+<h2>Enter floating point</h2>
+
+<p>Floating point is one system for representing real numbers.</p>
+
+<p>It should be unsurprising that most programming languages offer built-in
+datatypes for representing integers as well as (approximations for) reals.</p>
+
+<p>We mentioned before that we cannot store an infinite number of decimal
+places in memory. The amount of decimal places stored is referred to
+the precision of the float.</p>
+
+<p>Floating point is perhaps the most common way reals are represented
+by computers.
+Variables for storing integers are often designated with the type &lsquo;int&rsquo;
+or &lsquo;integer&rsquo; while those used for reals are often
+designated by the type &lsquo;float&rsquo;<sup>[1]</sup>.</p>
+
+<p><sup>[1]<em>Other float types such as &lsquo;double&rsquo; or &lsquo;long&rsquo; specify the precision of the float.</em></sup></p>
+
+<h2>Floating limitations</h2>
+
+<p>As discussed, floating point numbers are only approximations for real
+numbers, so</p>
+
+<figure class='code'><figcaption><span>Listing 1 - Floating point addition</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="mf">0.25</span> <span class="o">+</span> <span class="mf">0.35</span>
+</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">+</span> <span class="mf">0.4</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span>
+</span><span class='line'><span class="k">print</span> <span class="n">b</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Output</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mf">0.6</span>
+</span><span class='line'><span class="mf">0.6</span>
+</span><span class='line'><span class="n">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In 2 something floating point, floating point numbers are multiples
+of powers of two. Hence certain values such as 0.1, and 0.6 can
+never be accurately represented. Operations which evaluate to such
+numbers</p>
+
+<p>While both operations appear to evaluate to the expected result, 0.6,</p>
+
+<p>If this topic interests you, please refer to this <a href="http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html">comprehensive resource</a>.</p>
+
+<p>Unlike integers, floats do not strictly obey the <a href="http://en.wikipedia.org/wiki/Associative_property">associative property</a>.</p>
+
+<p>This can cause unexpected behaviour when performing arithmetic.</p>
+
+<figure class='code'><figcaption><span>Listing 2 - Floating point associativity</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">**</span> <span class="mi">4</span>
+</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span> <span class="o">*</span> <span class="mf">0.4</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span>
+</span><span class='line'><span class="k">print</span> <span class="n">b</span>
+</span><span class='line'><span class="k">print</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Output</span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mf">0.0256</span>
+</span><span class='line'><span class="mf">0.0256</span>
+</span><span class='line'><span class="n">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>One important, and practical consideration to take out of this is that it would pay to <em>always</em> be wary of code which performs value comparisons between floating point values. Use integers anywhere they will do the job and consider investigating whether your language offers Decimal types where precision is crucial.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Welcome!]]></title>
+    <link href="http://jling90.github.io/blog/2015/01/12/Intro/"/>
+    <updated>2015-01-12T14:35:52+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/01/12/Intro</id>
+    <content type="html"><![CDATA[<p>Hi and welcome to my blog. My name is Jun.</p>
+
+<p>By day, I&rsquo;m a student at the University of Queensland studying a
+Bachelor of Software Engineering and Bachelor of Science in Genetics
+(masked villain by night). I have a keen interest in programming, science
+and especially where the two intersect.</p>
+
+<p>I spend a lot of my time in a linux terminal hacking together little
+scripts to automate manual tasks in the blind hope that I&rsquo;ll be saving
+effort in the long run.
+At leisure I&rsquo;m also an avid reader. I&rsquo;ll consume anything I can get my
+hands on; science papers, tech blogs or fiction novels. I think
+there&rsquo;s as much to learn from Kurt Vonnegut as Russel &amp; Norvig.</p>
+
+<p>I hope you&rsquo;ll take the time to poke through some of my stuff and
+ask uncomfortable questions about things I&rsquo;ve gotten wrong or worded
+poorly. That seems to me the best way to learn.</p>
+
+<p>-Jun</p>
+
+<!---
+First time here? Reverse chronological ordering..
+
+
+-->
+
+]]></content>
+  </entry>
+  
+</feed>

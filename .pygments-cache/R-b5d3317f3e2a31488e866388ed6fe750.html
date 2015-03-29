@@ -1,0 +1,47 @@
+<div class="highlight"><pre><span class="c1"># Sample a vector of uniform, random numbers between 0 and 1.</span>
+vec <span class="o">=</span> runif<span class="p">(</span><span class="m">10000000</span><span class="p">)</span>
+
+<span class="c1"># Function for rounding numbers to 0 or 1 -- loop implementation.</span>
+round.loop <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+    <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="kp">seq_along</span><span class="p">(</span>vec<span class="p">)){</span>
+        vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;-</span> <span class="kr">if</span> <span class="p">(</span>vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1"># Function for rounding to 0 or 1 -- vector implementation.</span>
+round.vec <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+    vec<span class="p">[</span>vec <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+    vec<span class="p">[</span>vec <span class="o">&gt;=</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">1</span>
+
+    <span class="c1"># A bit of explanation. The expression &#39;vec[vec &lt; 0.5] &lt;- 0&#39;</span>
+    <span class="c1"># selects elements from vec where &#39;vec &lt; 0.5&#39; evaluates TRUE then</span>
+    <span class="c1"># replaces these elements with 0. Likewise for values &gt;=0.5.</span>
+<span class="p">}</span>
+
+<span class="c1"># For completeness... using &#39;lapply&#39;.</span>
+round.apply <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+    <span class="kp">lapply</span><span class="p">(</span>vec<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
+        <span class="kr">if</span> <span class="p">(</span>x <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+    <span class="p">})</span>
+<span class="p">}</span>
+
+<span class="c1"># Time to test and profile...</span>
+test.wrapper <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>func<span class="p">,</span> arg<span class="p">){</span>
+    Rprof<span class="p">(</span><span class="s">&quot;test.out&quot;</span><span class="p">)</span>
+    result <span class="o">&lt;-</span> func<span class="p">(</span>arg<span class="p">)</span>
+    Rprof<span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
+    summaryRprof<span class="p">(</span><span class="s">&quot;test.out&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+test.wrapper<span class="p">(</span>round.loop<span class="p">,</span> vec<span class="p">)</span>
+<span class="c1"># $sampling.time</span>
+<span class="c1"># [1] 26.54</span>
+
+test.wrapper<span class="p">(</span>round.vec<span class="p">,</span> vec<span class="p">)</span>
+<span class="c1"># $sampling.time</span>
+<span class="c1"># [1] 0.9</span>
+
+test.wrapper<span class="p">(</span>round.apply<span class="p">,</span> vec<span class="p">)</span>
+<span class="c1"># $sampling.time</span>
+<span class="c1"># [1] 47.42</span>
+</pre></div>

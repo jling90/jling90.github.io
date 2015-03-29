@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Genetics | scIT]]></title>
+  <link href="http://jling90.github.io/blog/categories/genetics/atom.xml" rel="self"/>
+  <link href="http://jling90.github.io/"/>
+  <updated>2015-03-29T20:25:37+10:00</updated>
+  <id>http://jling90.github.io/</id>
+  <author>
+    <name><![CDATA[Jun Ling]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shannon Entropy and Stronger Passwords]]></title>
+    <link href="http://jling90.github.io/blog/2015/03/28/Shannon-entropy-and-passwords/"/>
+    <updated>2015-03-28T18:26:12+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/03/28/Shannon-entropy-and-passwords</id>
+    <content type="html"><![CDATA[<p>Password logins are something we should all be familiar with from day-to-day life.
+One topic that frequently comes up is: &ldquo;how do we select our passwords?&rdquo; One obvious
+but important point to make is that a <em>strong password is one which a computer will
+have difficulty guessing, not a human</em>. What follows is a (hopefully) intuitive
+introduction to password security to those without an information security background.</p>
+
+<p>Many services require that passwords contain some combination of lower case and upper case
+letters, numbers and symbols. A minimum password length is also often enforced.</p>
+
+<p>Shannon entropy (not to be confused with thermodynamic entropy, a similarly harrowing
+concept),</p>
+
+<p>The obvious challenge is that passwords often end up being meaningless strings of
+characters which are difficult to remember.</p>
+
+<p>Using &lsquo;pass phrases&rsquo; in the place of passwords allow the generation of memorable
+passwords which are higher in entropy than short strings of characters.</p>
+
+<p>One idea I find particularly clever idea which extends the principle of pass phrases is
+called Diceware.</p>
+
+<p><a href="https://firstlook.org/theintercept/2015/03/26/passphrases-can-memorize-attackers-cant-guess/">https://firstlook.org/theintercept/2015/03/26/passphrases-can-memorize-attackers-cant-guess/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Muller's Ratchet Pt. 1]]></title>
+    <link href="http://jling90.github.io/blog/2015/01/14/Mullers-ratchet/"/>
+    <updated>2015-01-14T17:58:12+10:00</updated>
+    <id>http://jling90.github.io/blog/2015/01/14/Mullers-ratchet</id>
+    <content type="html"><![CDATA[<p>One of the more interesting courses I took in science undergrad was
+<em>Ecological and Evolutionary Genetics</em>. Sometimes scientific processes
+are perfect candidates for computational modelling and in our first
+practical, I was ecstatic when we received code to experiment with.</p>
+
+<h3>Muller&rsquo;s ratchet, watered down</h3>
+
+<p>The code we were given was an R script for simulating
+<a href="http://en.wikipedia.org/wiki/Muller%27s_ratchet">Muller&rsquo;s ratchet</a>, an
+explanation for the accumulation of deleterious mutations in asexual
+populations. One consequence of this mechanism is that as these
+deleterious mutations accrue in a population over time
+(a phenomenon termed
+&lsquo;genetic load&rsquo;), the ability for the population to survive in its
+environment is compromised. Ultimately this can lead to an increased
+risk of extinction.</p>
+
+<p>Genetic mutations occur stochastically through faulty DNA
+replication and repair or in response to environmental factors such
+as ionizing radiation or chemical mutagens. A deleterious mutation
+results in a phenotype (&lsquo;trait&rsquo;) which reduces an
+individual&rsquo;s &lsquo;fitness&rsquo; - the ability for an organism to survive to
+produce offspring.</p>
+
+<p>When asexual organisms reproduce, children are an identical
+genetic clone of their parent. As such, asexual offspring
+inherit all mutations from their parents
+(except in the rare case of backward mutation).</p>
+
+<p>In the absence of
+genetic recombination, mutations are preserved in</p>
+
+<p>these mutations can not be purged from the
+genome and so in subsequent generations the number of deleterious
+mutations in a family line necessarily increases.</p>
+
+<p>Eventually, as a result of genetic drift the least loaded classes will
+be lost. Each time this occurs represents a &lsquo;click&rsquo; of Muller&rsquo;s ratchet
+.</p>
+
+<p>The rate of Muller&rsquo;s ratchet is given by</p>
+
+<h3>To the code</h3>
+
+<p>The script we were given modelled loading of individuals within a
+population over evolutionary time.</p>
+
+<p>We were to investigate the effects of population size, <em>N</em>, mutation rate
+, &mu;, and selection coefficient, <em>s</em> on the speed of Muller&rsquo;s ratchet.</p>
+
+<p>Using the code we&rsquo;d been provided with, I wanted to run a large number of
+simulations to generate a nice profile of the variable-space.</p>
+
+<p>Unfortunately, the code as provided ran slowly making it painful
+to generate a large quantity of results for analysis. Throwing more
+processing power and memory at the code wasn&rsquo;t yielding much success so
+rather than take the sensible route and work with what we had, it was
+time to tinker with the code.</p>
+
+<p>Thanks to the speed-up, here are some sweet space-blankets I got
+around to making.</p>
+
+<h3>R&rsquo;s hate-affair with loops</h3>
+
+<p>Experienced R programmers frequently push an idea which might seem
+unusual to those coming from other languages: Loops are slow and should
+be avoided.</p>
+
+<p>This isn&rsquo;t strictly true of course, and loop structures exist in R as
+in most sensible tool for the task at hand. The idiom likely
+comes forth because simple loop logic can frequently be replaced with
+much more efficient vectorised operations.</p>
+
+<p>Other users will also note that for-loops can often be
+substituted with one of R&rsquo;s
+<a href="https://nsaunders.wordpress.com/2010/08/20/a-brief-introduction-to-apply-in-r/">apply</a>
+statements which can be more performant, and which some believe
+to be more readable.</p>
+
+<p>Regardless of which school of thought you belong to, a sensible first
+step in interrogating slow R code is to find loops and regard them with
+a bit of suspicion.</p>
+
+<p>Here&rsquo;s a simple loop vs vector example for illustrative purposes.</p>
+
+<p><figure class='code'><figcaption><span>vectorisation vs  </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+</pre></td><td class='code'><pre><code class='R'><span class='line'><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span>Sample a <span class="kt">vector</span> of uniform<span class="p">,</span> random numbers between <span class="m">0</span> and <span class="m">1.</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>vec <span class="o">=</span> runif<span class="p">(</span><span class="m">10000000</span><span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span>Function <span class="kr">for</span> rounding numbers to <span class="m">0</span> or <span class="m">1</span> <span class="o">&amp;</span>ndash<span class="p">;</span> loop implementation.<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>round.loop <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    <span class="kr">for</span><span class="p">(</span>i <span class="kr">in</span> <span class="kp">seq_along</span><span class="p">(</span>vec<span class="p">)){</span>
+</span><span class='line'>        vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">if</span> <span class="p">(</span>vec<span class="p">[</span>i<span class="p">]</span> <span class="o">&amp;</span>lt<span class="p">;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span>Function <span class="kr">for</span> rounding to <span class="m">0</span> or <span class="m">1</span> <span class="o">&amp;</span>ndash<span class="p">;</span> <span class="kt">vector</span> implementation.<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>round.vec <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    vec<span class="p">[</span>vec <span class="o">&lt;</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="m">0</span>
+</span><span class='line'>    vec<span class="p">[</span>vec <span class="o">&gt;=</span> <span class="m">0.5</span><span class="p">]</span> <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="m">1</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>pre<span class="o">&gt;&lt;</span>code<span class="o">&gt;</span><span class="c1"># A bit of explanation. The expression &#39;vec[vec &amp;lt; 0.5] &amp;lt;- 0&#39;</span>
+</span><span class='line'><span class="c1"># selects elements from vec where &#39;vec &amp;lt; 0.5&#39; evaluates TRUE then</span>
+</span><span class='line'><span class="c1"># replaces these elements with 0. Likewise for values &amp;gt;=0.5.</span>
+</span><span class='line'><span class="o">&lt;/</span>code<span class="o">&gt;&lt;/</span>pre<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span><span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span>For completeness<span class="o">&amp;</span>hellip<span class="p">;</span> using <span class="o">&amp;</span>lsquo<span class="p">;</span><span class="kp">lapply</span><span class="o">&amp;</span>rsquo<span class="p">;</span><span class="m">.</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>round.apply <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">function</span><span class="p">(</span>vec<span class="p">){</span>
+</span><span class='line'>    <span class="kp">lapply</span><span class="p">(</span>vec<span class="p">,</span> <span class="kr">function</span><span class="p">(</span>x<span class="p">){</span>
+</span><span class='line'>        <span class="kr">if</span> <span class="p">(</span>x <span class="o">&amp;</span>lt<span class="p">;</span> <span class="m">0.5</span><span class="p">)</span> <span class="m">0</span> <span class="kr">else</span> <span class="m">1</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span>Time to test and profile<span class="o">&amp;</span>hellip<span class="p">;</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> <span class="kr">function</span><span class="p">(</span>func<span class="p">,</span> arg<span class="p">){</span>
+</span><span class='line'>    Rprof<span class="p">(</span><span class="o">&amp;</span>ldquo<span class="p">;</span>test.out<span class="o">&amp;</span>rdquo<span class="p">;)</span>
+</span><span class='line'>    result <span class="o">&amp;</span>lt<span class="p">;</span><span class="o">-</span> func<span class="p">(</span>arg<span class="p">)</span>
+</span><span class='line'>    Rprof<span class="p">(</span><span class="kc">NULL</span><span class="p">)</span>
+</span><span class='line'>    summaryRprof<span class="p">(</span><span class="o">&amp;</span>ldquo<span class="p">;</span>test.out<span class="o">&amp;</span>rdquo<span class="p">;)</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper<span class="p">(</span>round.loop<span class="p">,</span> vec<span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;$</span>sampling.time<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">26.54</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper<span class="p">(</span>round.vec<span class="p">,</span> vec<span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;$</span>sampling.time<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">0.9</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>test.wrapper<span class="p">(</span>round.apply<span class="p">,</span> vec<span class="p">)</span><span class="o">&lt;/</span>p<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;$</span>sampling.time<span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>h1<span class="o">&gt;</span><span class="p">[</span><span class="m">1</span><span class="p">]</span> <span class="m">47.42</span><span class="o">&lt;/</span>h1<span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span>p<span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>As we should all know, premature optimization is a cardinal sin, but
+after performing some coarse profiling with Rprof, it turned out one
+little function in our Muller&rsquo;s Ratchet script was taking up
+approximately 98% of the script&rsquo;s execution time. In the next part of
+this post, we&rsquo;ll be diving into the code and wriggling around a bit.</p>
+]]></content>
+  </entry>
+  
+</feed>
